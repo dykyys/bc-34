@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page title</title>
+    <link rel="stylesheet" href="./sass/index.scss" />
+    <script type="module" src="./js/infiniteScroll/index.js"></script>
+  </head>
+  <body>
+    <a class="nav__link" href="./index.html">back</a>
+    <section class="gallery-section">
+      <div class="container">
+        <form class="search-form js-search-form">
+          <input type="text" name="query" class="search-input" />
+          <button type="submit" class="search-btn">search</button>
+        </form>
+        <ul class="gallery js-gallery list"></ul>
+      </div>
+      <div class="backdrop is-hidden js-backdrop"><div id="spiner"></div></div>
+      <div class="target"></div>
+    </section>
+  </body>
+</html>
