@@ -41,7 +41,9 @@ export class UnsplashAPI {
   setTotal(newTotal) {
     this.#totalPhotos = newTotal;
   }
-
+  resetPage() {
+    this.#page = 1;
+  }
   hasMorePhotos() {
     return this.#page < Math.ceil(this.#totalPhotos / this.#per_page);
   }

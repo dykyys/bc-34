@@ -29,6 +29,7 @@ const handleSubmit = event => {
   unsplash.query = searchQuery;
 
   refs.list.innerHTML = '';
+  unsplash.resetPage();
 
   loadMore.hide();
 
