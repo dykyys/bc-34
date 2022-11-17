@@ -5,11 +5,7 @@ import 'material-icons/iconfont/material-icons.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { spinerPlay, spinerStop } from './js/spinner';
 
-const refs = {
-  list: document.querySelector('.js-contacts-container'),
-  update: document.querySelector('.js-reload'),
-};
-
+import { refs } from './js/refs';
 import {
   getContacts,
   getContactById,
@@ -76,30 +72,4 @@ const handleClick = event => {
 };
 
 refs.list.addEventListener('click', handleClick);
-refs.update.addEventListener('click', initPage);
-
-updateContact({ name: 'mango', id: 1 });
-
-//  {
-//   "createdAt": "2022-11-16T21:48:20.807Z",
-//   "name": "Lance Kunde",
-//   "phone": "876-927-4348",
-//   "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/462.jpg",
-//   "email": "Geovanny91@hotmail.com",
-//   "id": "1"
-//  },
-
-// put {"name": "mango",  "phone": "5555555",}
-
-//  {"name": "mango","phone": "5555555",}
-
-//patch {"name": "mango",  "phone": "5555555",}
-
-//  {
-//   "createdAt": "2022-11-16T21:48:20.807Z",
-//   "name": "mango",
-//   "phone": "5555555",
-//   "avatar": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/462.jpg",
-//   "email": "Geovanny91@hotmail.com",
-//   "id": "1"
-//  },
+refs.reload.addEventListener('click', initPage);
