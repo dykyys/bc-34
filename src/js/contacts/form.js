@@ -3,7 +3,7 @@ import throttle from 'lodash.throttle';
 import localStorApi from './localestorage';
 import { spinerPlay, spinerStop } from './spinner';
 import { refs } from './refs';
-import { postContact } from './service/contact.service';
+import { postContact } from './service/AXIOS.contact.service';
 import { createContact } from './createContact';
 
 const LOCAL_STORAGE_KEY = 'user-data';
@@ -14,7 +14,7 @@ const toggleHiddenModal = () => {
   refs.backdrop.classList.toggle('is-hidden');
 };
 
-const handleSubmit = event => {
+const handleSubmit = async event => {
   event.preventDefault();
   const { name, email, phone } = event.target.elements;
 
@@ -31,21 +31,21 @@ const handleSubmit = event => {
     userData[name] = value;
   });
   spinerPlay();
-  postContact(userData)
-    .then(contact => {
-      Notify.success(`${contact.name} created!`, { position: 'left-top' });
-      const markup = createContact(contact);
-      refs.list.insertAdjacentHTML('afterbegin', markup);
-    })
-    .catch(error => {
-      console.log(error);
-    })
-    .finally(() => {
-      spinerStop();
-    });
+
+  try {
+    const contact = await postContact(userData);
+    Notify.success(`${contact.name} created!`, { position: 'left-top' });
+    const markup = createContact(contact);
+
+    refs.list.insertAdjacentHTML('afterbegin', markup);
+  } catch (error) {
+    console.log(error.message);
+  } finally {
+    spinerStop();
+  }
 
   toggleHiddenModal();
-  event.currentTarget.reset();
+  event.target.reset();
   localStorApi.remove(LOCAL_STORAGE_KEY);
 };
 
@@ -62,7 +62,6 @@ function initForm() {
   let persistedData = localStorApi.load(LOCAL_STORAGE_KEY);
   if (persistedData) {
     Object.entries(persistedData).forEach(([name, value]) => {
-      console.log(refs.form.elements[name]);
       refs.form.elements[name].value = value;
     });
   }

@@ -11,13 +11,22 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./sass/index.scss" />
+    <script type="module" src="./js/contacts/index.js"></script>
+    <script type="module" src="./js/contacts/form.js"></script>
+    <script type="module" src="./js/contacts/form-update.js"></script>
   </head>
   <body style="background: linear-gradient(to right, #b2bfc2, #e6e7db)">
     <!-- Так добавляются фрагменты в главные HTML-файлы страниц. -->
+    <a class="nav__link" href="./index.html">back</a>
+    <include src="./partials/header.html"></include>
 
-    <ul>
-      <li><a class="nav__link" href="./contacts.html">contacts</a></li>
-      <li><a class="nav__link" href="./photos.html">photos</a></li>
-    </ul>
+    <section class="pt-5 pb-5">
+      <include src="./partials/card.html"></include>
+    </section>
+    <include src="./partials/form.html"></include>
+    <include src="./partials/form-update.html"></include>
+    <div class="backdrop is-hidden" data-load>
+      <div class="js-spinner"></div>
+    </div>
   </body>
 </html>

@@ -3,7 +3,7 @@ import throttle from 'lodash.throttle';
 import localStorApi from './localestorage';
 import { spinerPlay, spinerStop } from './spinner';
 import { refs } from './refs';
-import { updateContact } from './service/contact.service';
+import { updateContact } from './service/AXIOS.contact.service';
 import { createContact } from './createContact';
 
 const LOCAL_STORAGE_KEY = 'user-data-update';
@@ -14,7 +14,7 @@ const toggleHiddenModal = () => {
   refs.backdropUpdate.classList.toggle('is-hidden');
 };
 
-const handleSubmit = event => {
+const handleSubmit = async event => {
   event.preventDefault();
   const { id, name, email, phone } = event.target.elements;
 
@@ -39,21 +39,22 @@ const handleSubmit = event => {
 
   spinerPlay();
 
-  updateContact(userData)
-    .then(contact => {
-      Notify.success(`${contact.id} updated!`);
-      console.log(contact);
-    })
-    .catch(error => {
-      Notify.failure('Try again. Check id!');
-      console.log(error.message);
-    })
-    .finally(() => {
-      spinerStop();
-    });
+  try {
+    const contact = await updateContact(userData);
+    Notify.success(`${contact.id} updated!`);
+
+    console.log(contact);
+    const data = createContact(contact);
+    const items = document.querySelectorAll(`[data-id]`);
+  } catch (error) {
+    Notify.failure('Try again. Check id!');
+    console.log(error.message);
+  } finally {
+    spinerStop();
+  }
 
   toggleHiddenModal();
-  event.currentTarget.reset();
+  event.target.reset();
   localStorApi.remove(LOCAL_STORAGE_KEY);
 };
 
